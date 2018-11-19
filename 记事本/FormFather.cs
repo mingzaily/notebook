@@ -20,6 +20,10 @@ namespace 记事本
         public FormFather()
         {
             InitializeComponent();
+            foreach (FontFamily name in FontFamily.Families)
+            {
+                toolStripComboBox.Items.Add(name.Name);
+            }
         }
 
         private void richTextBox_TextChanged(object sender, EventArgs e)
@@ -152,6 +156,12 @@ namespace 记事本
             richTextBox.Paste();
         }
 
+
+        private void 删除ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox.SelectedText = "";
+        }
+
         private void 查找ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FindPostion = 0;
@@ -275,7 +285,7 @@ namespace 记事本
         {
             if(fontDialog.ShowDialog()==DialogResult.OK)
             {
-                richTextBox.SelectionFont = new Font(fontDialog.Font.FontFamily, fontDialog.Font.Size);
+                richTextBox.SelectionFont = fontDialog.Font;
             }
             
         }
@@ -287,6 +297,30 @@ namespace 记事本
                 richTextBox.SelectionColor = colorDialog.Color;
             }
         }
+
+        //工具栏功能区
+        private void toolStripComboBox_TextChanged(object sender, EventArgs e)
+        {
+            richTextBox.SelectionFont = new Font(toolStripComboBox.Text, richTextBox.Font.Size);
+            richTextBox.Focus();
+        }
+
+        //右键功能区
+        private void 左对齐ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox.SelectionAlignment= HorizontalAlignment.Left;
+        }
+
+        private void 居中对齐ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox.SelectionAlignment = HorizontalAlignment.Center;
+        }
+
+        private void 右对齐ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox.SelectionAlignment = HorizontalAlignment.Right;
+        }
+
 
     }
 }
